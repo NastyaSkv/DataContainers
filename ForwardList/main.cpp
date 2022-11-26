@@ -28,8 +28,10 @@ class ForwardList
 {
 	Element* Head; //указатель на начальный элемент списка
 	//голова явл. точкой входа в список
+	unsigned int size;
 public:
-	ForwardList() :Head(nullptr)
+
+	ForwardList() :Head(nullptr), size(0)
 	{
 		//констр-р по умолчанию создает пустой список
 		//Если голова указывает на 0, то список пуст
@@ -40,7 +42,8 @@ public:
 		cout << "LDestructor:\t" << this << endl;
 	}
 
-	//      Adding Elements:
+	//             Adding Elements:
+
 	void push_front(int Data)
 	{
 		//1) Создаем новый элемент:
@@ -49,6 +52,7 @@ public:
 		New->pNext = Head;
 		//3) Переводим Голову на новый элемент:
 		Head = New;
+		size++;
 	}
 	void push_back(int Data)
 	{
@@ -61,11 +65,12 @@ public:
 		//теперь итератор указывает на последний элемент списка,
 		//и к нему можно пристыковать новый элемент
 		Temp->pNext = New;
+		size++;
 	}
 	void insert(int Index, int Data)
 	{
 		if (Index == 0)return push_front(Data); //частный случай
-		if (Index > Head->count)
+		if (Index > size)
 		{
 			cout << "Error: Out of range" << endl;
 			return;
@@ -79,6 +84,7 @@ public:
 		// 3)Включаем новый элемент в список:
 		New->pNext = Temp->pNext;
 		Temp->pNext = New;
+		size++;
 	}
 
 	//                  Removing elements
@@ -90,6 +96,7 @@ public:
 		Head = Head->pNext;
 		// 3) удаляем элемент из памяти:
 		delete erased;
+		size--;
 	}
 	void pop_back()
 	{
@@ -102,6 +109,7 @@ public:
 		delete Temp->pNext;
 		// 3) Зануляем указатель на следующий элемент:
 		Temp->pNext = nullptr;
+		size--;
 	}
 
 	//		            Methods:
@@ -116,7 +124,8 @@ public:
 			cout << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
 			Temp = Temp->pNext; //переходим на следующий элемент
 		}
-		cout << "Количество элементов списка: " << Head->count << endl;
+		cout << "Количество элементов списка:\t" << size << endl;
+		cout << "Общее кол-во элементов списка:  " << Element::count << endl;
 	}
 };
 
