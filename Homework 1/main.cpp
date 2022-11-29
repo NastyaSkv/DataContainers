@@ -135,6 +135,11 @@ public:
 		size--;
 	}
 
+	void clean()
+	{
+		while (size)pop_front();
+	}
+
 		//		            Methods:
 		void print()const
 	{
@@ -180,4 +185,5 @@ void main()
 	cout << "Введите индекс удаляемого элемента: "; cin >> index;
 	list.erase(index);
 	list.print();
+	list.clean();
 }
