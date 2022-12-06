@@ -74,7 +74,7 @@ public:
 		delete Temp;
 		/*Element* Temp = Head;
 		Element* Temp_2 = Tail;
-		while (Head)
+		while (Temp->pNext)
 		{
 			Tail = Head->pNext;
 			delete Head;
