@@ -72,6 +72,16 @@ public:
 		while (Temp->pNext)Temp = Temp->pNext;
 		Tail = Temp->pPrev;
 		delete Temp;
+		/*Element* Temp = Head;
+		Element* Temp_2 = Tail;
+		while (Head)
+		{
+			Tail = Head->pNext;
+			delete Head;
+			Head = Tail;
+		}
+		Head = Head->pNext;
+		delete Head;*/
 	}
 
 	//			 Methods:
