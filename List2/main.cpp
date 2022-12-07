@@ -1,6 +1,3 @@
-Ôªø//1. –í –∫–ª–∞—Å—Å List –¥–æ–±–∞–≤–∏—Ç—å –º–µ—Ç–æ–¥ ? ? ? erase(? ? ? );
-//2. –ù–∞–ø–∏—Å–∞—Ç—å operator+ –∏ MoveMethods;
-//3. –ü—Ä–æ–≤–µ—Ä–æ—á–Ω—ã–π –∫–æ–¥ –¥–æ–ª–∂–µ–Ω –∑–∞—Ä–∞–±–æ—Ç–∞—Ç—å :
 #include<iostream>
 using std::cin;
 using std::cout;
@@ -27,60 +24,9 @@ class List
 			cout << "EDestructor:\t" << this << endl;
 		}
 		friend class List;
-		friend class Iterator;
-		friend List operator+(const List& left, const List& right);
 	}*Head, * Tail;
-
-	class Iterator
-	{
-		Element* Temp;
-	public:
-		Iterator(Element* Temp) :Temp(Temp)
-		{
-			cout  << "ItConstructor:\t" << this << endl;
-		}
-		~Iterator()
-		{
-			cout << "ItDestructor:\t" << this << endl;
-		}
-
-		Iterator& operator++()
-		{
-			Temp = Temp->pNext;
-			return *this;
-		}
-		bool operator==(const Iterator& other)const
-		{
-			return this->Temp == other.Temp;
-		}
-		bool operator!=(const Iterator& other)const
-		{
-			return this->Temp != other.Temp;
-		}
-
-		const int& operator*()const
-		{
-			return Temp->Data;
-		}
-		int& operator*()
-		{
-			return Temp->Data;
-		}
-	};
-
 	unsigned int size;
-
 public:
-	Iterator begin()
-	{
-		return Head;
-	}
-	Iterator end()
-	{
-		//return nullptr;
-		return Tail->pNext;
-	}
-	//                    Constructors:
 	List()
 	{
 		Head = Tail = nullptr;
@@ -101,15 +47,10 @@ public:
 		*this = other;
 		cout << "CopyConstructor:" << this << endl;
 	}
-	List(List& other) :List()
-	{
-		*this = std::move(other);
-		cout << "MoveConstructor:" << this << endl;
-	}
 	~List()
 	{
 		//while (Head)pop_front();
-		while (Head)pop_front();
+		while (Tail)pop_back();
 		cout << "LDestructor:\t" << this << endl;
 	}
 	//                    Operators:
@@ -122,23 +63,10 @@ public:
 		cout << "CopyAssignment:\t" << this << endl;
 		return *this;
 	}
-	List& operator=(List&& other)
-	{
-		if (this == &other)return *this;
-		while (Head)pop_front();
-		this->Head = other.Head;
-		this->Tail = other.Tail;
-		this->size = other.size;
-		other.Head = nullptr;
-		other.Tail = nullptr;
-		other.size = 0;
-		cout << "MoveAssignment" << this << endl;
-		return *this;
-	}
 	//                    Adding Elements:
 	void push_front(int Data)
 	{
-		if (Head == nullptr && Tail == nullptr) //—á–∞—Å—Ç–Ω—ã–π —Å–ª—É—á–∞–π
+		if (Head == nullptr && Tail == nullptr) //˜‡ÒÚÌ˚È ÒÎÛ˜‡È
 		{
 			Head = Tail = new Element(Data);
 			size++;
@@ -210,68 +138,33 @@ public:
 		Tail->pNext = nullptr;
 		size--;
 	}
-	void erase(int Index)
-	{
-		if (Index > size)
-		{
-			cout << "Error: Out of range" << endl;
-		}
-		if (Index == 0)return pop_front();
-		if (Index == size)return pop_back();
-		Element* Temp;
-		if (Index < size / 2)
-		{
-			Temp = Head;
-			for (int i = 0; i < Index; i++)Temp = Temp->pNext;
-		}
-		else
-		{
-			Temp = Tail;
-			for (int i = 0; i < size - Index; i++)Temp = Temp->pPrev;
-		}
-		Temp->pNext->pPrev = Temp->pPrev;
-		Temp->pPrev->pNext = Temp->pNext;
-		delete Temp;
-		size--;
-	}
 	//                    Methods:
 	void print()const
 	{
-		cout << "–ì–æ–ª–æ–≤–∞ —Å–ø–∏—Å–∫–∞:" << Head << endl;
+		cout << "√ÓÎÓ‚‡ ÒÔËÒÍ‡:" << Head << endl;
 		for (Element* Temp = Head; Temp; Temp = Temp->pNext)
 			cout << Temp->pPrev << tab << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
-		cout << "–•–≤–æ—Å—Ç —Å–ø–∏—Å–∫–∞:" << Tail << endl;
-		cout << "–ö–æ–ª–∏—á–µ—Å—Ç–≤–æ —ç–ª–µ–º–µ–Ω—Ç–æ–≤ —Å–ø–∏—Å–∫–∞: " << size << endl;
+		cout << "’‚ÓÒÚ ÒÔËÒÍ‡:" << Tail << endl;
+		cout << " ÓÎË˜ÂÒÚ‚Ó ˝ÎÂÏÂÌÚÓ‚ ÒÔËÒÍ‡: " << size << endl;
 	}
 	void reverse_print()const
 	{
-		cout << "–•–≤–æ—Å—Ç —Å–ø–∏—Å–∫–∞:" << Tail << endl;
+		cout << "’‚ÓÒÚ ÒÔËÒÍ‡:" << Tail << endl;
 		for (Element* Temp = Tail; Temp; Temp = Temp->pPrev)
 			cout << Temp->pPrev << tab << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
-		cout << "–ì–æ–ª–æ–≤–∞ —Å–ø–∏—Å–∫–∞:" << Head << endl;
-		cout << "–ö–æ–ª–∏—á–µ—Å—Ç–≤–æ —ç–ª–µ–º–µ–Ω—Ç–æ–≤ —Å–ø–∏—Å–∫–∞: " << size << endl;
+		cout << "√ÓÎÓ‚‡ ÒÔËÒÍ‡:" << Head << endl;
+		cout << " ÓÎË˜ÂÒÚ‚Ó ˝ÎÂÏÂÌÚÓ‚ ÒÔËÒÍ‡: " << size << endl;
 	}
-	friend class Element;
-	friend List operator+(const List& left, const List& right);
 };
 
-List operator+(const List& left, const List& right)
-{
-	List cat = left;  //CopyConstructor
-	for (List::Element* Temp = right.Head; Temp; Temp = Temp->pNext)
-		cat.push_back(Temp->Data);
-	return cat;
-}
 //#define BASE_CHECK
-//#define TASK_2
-#define TASK_3
 
 void main()
 {
 	setlocale(LC_ALL, "");
 #ifdef BASE_CHECK
 	int n;
-	cout << "–í–≤–µ–¥–∏—Ç–µ —Ä–∞–∑–º–º–µ—Ä —Å–ø–∏—Å–∫–∞: "; cin >> n;
+	cout << "¬‚Â‰ËÚÂ ‡ÁÏÏÂ ÒÔËÒÍ‡: "; cin >> n;
 	List list;
 	for (int i = 0; i < n; i++)
 	{
@@ -283,41 +176,22 @@ void main()
 
 	int index;
 	int value;
-	int znach;
-	cout << "–í–≤–µ–¥–∏—Ç–µ –∏–Ω–¥–µ–∫—Å –¥–æ–±–∞–≤–ª—è–µ–º–æ–≥–æ —ç–ª–µ–º–µ–Ω—Ç–∞: "; cin >> index;
-	cout << "–í–≤–µ–¥–∏—Ç–µ –∑–Ω–∞—á–µ–Ω–∏–µ –¥–æ–±–∞–≤–ª—è–µ–º–æ–≥–æ —ç–ª–µ–º–µ–Ω—Ç–∞: "; cin >> value;
+	cout << "¬‚Â‰ËÚÂ ËÌ‰ÂÍÒ ‰Ó·‡‚ÎˇÂÏÓ„Ó ˝ÎÂÏÂÌÚ‡: "; cin >> index;
+	cout << "¬‚Â‰ËÚÂ ÁÌ‡˜ÂÌËÂ ‰Ó·‡‚ÎˇÂÏÓ„Ó ˝ÎÂÏÂÌÚ‡: "; cin >> value;
 	list.insert(index, value);
 	list.print();
 	list.reverse_print();
-	cout << delimiter << endl;
-	cout << "–í–≤–µ–¥–∏—Ç–µ –∏–Ω–¥–µ–∫—Å —É–¥–∞–ª—è–µ–º–æ–≥–æ —ç–ª–µ–º–µ–Ω—Ç–∞: "; cin >> znach;
-	list.erase(znach);
-	list.print();
 #endif // BASE_CHECK
 
-#ifdef TASK_2
 	List list = { 3, 5, 8, 13, 21 };
 	list.print();
-	//list.reverse_print();
+	list.reverse_print();
 	cout << delimiter << endl;
 
-	//	List list2 = list;       //–Ω—É–∂–µ–Ω CopyConstructor
+//	List list2 = list;       //ÌÛÊÂÌ CopyConstructor
 	List list2;
 	list2 = list;            //CopyAssignment
 	list2.print();
-	//list2.reverse_print();
-	cout << delimiter << endl;
+	list2.reverse_print();
 
-	List list3 = list + list2;
-	list3.print();
-#endif // TASK_2
-
-#ifdef TASK_3
-	List list = { 3, 5, 8, 13, 21 };
-	list.print();
-	for (int i : list)
-	{
-		cout << i << tab;
-	}
-#endif // TASK_3
 }
