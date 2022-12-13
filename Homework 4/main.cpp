@@ -1,4 +1,7 @@
 //cop. BinaryTree
+//1. В класс Tree добавить следующие методы : minValue(); maxValue(); count(); sum(); avg(); depth(); erase();
+//2. Обеспечить вызов всех методов без необходимости передачи корня дерева :
+
 #include<iostream>
 using std::cin;
 using std::cout;
@@ -77,4 +80,11 @@ void main()
 	}
 	tree.print(tree.getRoot());
 	cout << endl;
+	
+	/*Tree tree;
+	for (int i = 0; i < n; i++)
+	{
+		tree.insert(rand() % 100);
+	}
+	tree.print();*/
 }
