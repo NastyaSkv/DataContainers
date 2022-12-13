@@ -16,50 +16,26 @@ class List
 		Element* pNext;
 		Element* pPrev;
 	public:
-		Element(T Data, Element* pNext = nullptr, Element* pPrev = nullptr)
-			:Data(Data), pNext(pNext), pPrev(pPrev)
-		{
-			cout << "EConstructor:\t" << this << endl;
-		}
-		~Element()
-		{
-			cout << "EDestructor:\t" << this << endl;
-		}
+		Element(T Data, Element* pNext = nullptr, Element* pPrev = nullptr);
+		~Element();
 		friend class List<T>;
 	}*Head, * Tail;
 	unsigned int size;
+	
 	class ConstBaseIterator
 	{
 	protected:
 		Element* Temp;
 	public:
-		ConstBaseIterator(Element* Temp) :Temp(Temp)
-		{
-#ifdef DEBUG
-			cout << "BCItConstructor:\t" << this << endl;
-#endif // DEBUG
-		}
-		~ConstBaseIterator()
-		{
-#ifdef DEBUG
-			cout << "BCItDestructor:\t" << this << endl;
-#endif // DEBUG
-		}
+		ConstBaseIterator(Element* Temp);
+		~ConstBaseIterator();
 
-		bool operator==(const ConstBaseIterator& other)const
-		{
-			return this->Temp == other.Temp;
-		}
-		bool operator!=(const ConstBaseIterator& other)const
-		{
-			return this->Temp != other.Temp;
-		}
-		const T& operator*()const
-		{
-			return Temp->Data;
-		}
+		bool operator==(const ConstBaseIterator& other)const;
+		bool operator!=(const ConstBaseIterator& other)const;
+		const T& operator*()const;
 	};
 public:
+	
 	class ConstIterator :public ConstBaseIterator
 	{
 	public:
@@ -71,6 +47,7 @@ public:
 		ConstIterator& operator--();
 		ConstIterator operator--(int);
 	};
+	
 	class ConstReverseIterator :public ConstBaseIterator
 	{
 	public:
@@ -82,6 +59,7 @@ public:
 		ConstReverseIterator& operator--();
 		ConstReverseIterator operator--(int);
 	};
+	
 	class Iterator :public ConstIterator
 	{
 	public:
@@ -89,6 +67,7 @@ public:
 		~Iterator() {}
 		T& operator*();
 	};
+	
 	class ReverseIterator :public ConstReverseIterator
 	{
 	public:
@@ -112,62 +91,102 @@ public:
 	List(const List<T>& other);
 	~List();
 
-	//				Operators:
+	//			     	Operators:
 	List<T>& operator=(const List<T>& other);
 
-	//				Adding Elements:
+	//				    Adding Elements:
 	void push_front(T Data);
 	void push_back(T Data);
 	void insert(int Index, T Data);
 
-	//				Removing Elements:
+	//				    Removing Elements:
 	void pop_front();
 	void pop_back();
 
-	//				Methods:
+	//				    Methods:
 	void print()const;
 	void reverse_print()const;
 };
 
 /////////////////////////////////////////////////////////////////////////
-/////////////////				CONST ITERATORS	       //////////////////
+/////////////////				ELEMENT                //////////////////
+/////////////////////////////////////////////////////////////////////////
+template<typename T>List<T>::Element::Element(T Data, Element* pNext, Element* pPrev)
+	:Data(Data), pNext(pNext), pPrev(pPrev)
+{
+#ifdef DEBUG
+	cout << "EConstructor:\t" << this << endl;
+#endif // DEBUG
+}
+template<typename T>List<T>::Element::~Element()
+{
+#ifdef DEBUG
+	cout << "EDestructor:\t" << this << endl;
+#endif // DEBUG
+}
+
+/////////////////////////////////////////////////////////////////////////
+/////////////////		  CONST BASE ITERATORS	       //////////////////
+/////////////////////////////////////////////////////////////////////////
+template<typename T>List<T>::ConstBaseIterator::ConstBaseIterator(Element* Temp) :Temp(Temp)
+{
+#ifdef DEBUG
+	cout << "BCItConstructor:\t" << this << endl;
+#endif // DEBUG
+}
+template<typename T>List<T>::ConstBaseIterator::~ConstBaseIterator()
+{
+#ifdef DEBUG
+	cout << "BCItDestructor:\t" << this << endl;
+#endif // DEBUG
+}
+
+template<typename T>bool List<T>::ConstBaseIterator::operator==(const ConstBaseIterator& other)const
+{
+	return this->Temp == other.Temp;
+}
+template<typename T>bool List<T>::ConstBaseIterator::operator!=(const List<T>::ConstBaseIterator& other)const
+{
+	return this->Temp != other.Temp;
+}
+template<typename T>const T& List<T>::ConstBaseIterator::operator*()const
+{
+	return Temp->Data;
+}
+
+/////////////////////////////////////////////////////////////////////////
+/////////////////			CONST ITERATORS	           //////////////////
 /////////////////////////////////////////////////////////////////////////
 
-template<typename T>
-List<T>::ConstIterator::ConstIterator(Element* Temp) :ConstBaseIterator(Temp)
+template<typename T>List<T>::ConstIterator::ConstIterator(Element* Temp) :ConstBaseIterator(Temp)
 {
 #ifdef DEBUG
 	cout << "ItConstructor:\t" << this << endl;
 #endif // DEBUG
 }
-template<typename T>
-List<T>::ConstIterator::~ConstIterator()
+template<typename T>List<T>::ConstIterator::~ConstIterator()
 {
 #ifdef DEBUG
 	cout << "ItDestructor:\t" << this << endl;
 #endif // DEBUG
 }
-template<typename T>
-typename List<T>::ConstIterator& List<T>::ConstIterator::operator++()
+template<typename T>typename List<T>::ConstIterator& List<T>::ConstIterator::operator++()
 {
 	ConstBaseIterator::Temp = ConstBaseIterator::Temp->pNext;
 	return *this;
 }
-template<typename T>
-typename List<T>::ConstIterator List<T>::ConstIterator::operator++(int)
+template<typename T>typename List<T>::ConstIterator List<T>::ConstIterator::operator++(int)
 {
 	ConstIterator old = *this;
 	ConstBaseIterator::Temp = ConstBaseIterator::Temp->pNext;
 	return old;
 }
-template<typename T>
-typename List<T>::ConstIterator& List<T>::ConstIterator::operator--()
+template<typename T>typename List<T>::ConstIterator& List<T>::ConstIterator::operator--()
 {
 	ConstBaseIterator::Temp = ConstBaseIterator::Temp->pPrev;
 	return *this;
 }
-template<typename T>
-typename List<T>::ConstIterator List<T>::ConstIterator::operator--(int)
+template<typename T>typename List<T>::ConstIterator List<T>::ConstIterator::operator--(int)
 {
 	ConstIterator old = *this;
 	ConstBaseIterator::Temp = ConstBaseIterator::Temp->pPrev;
@@ -175,49 +194,44 @@ typename List<T>::ConstIterator List<T>::ConstIterator::operator--(int)
 }
 
 /////////////////////////////////////////////////////////////////////////
-template<typename T>
-List<T>::ConstReverseIterator::ConstReverseIterator(Element* Temp) :ConstBaseIterator(Temp)
+template<typename T>List<T>::ConstReverseIterator::ConstReverseIterator(Element* Temp) :ConstBaseIterator(Temp)
 {
 #ifdef DEBUG
 	cout << "RItConstructor:\t" << this << endl;
 #endif // DEBUG
 }
-template<typename T>
-List<T>::ConstReverseIterator::~ConstReverseIterator()
+template<typename T>List<T>::ConstReverseIterator::~ConstReverseIterator()
 {
 #ifdef DEBUG
 	cout << "RItDestructor:\t" << this << endl;
 #endif // DEBUG
 }
 
-template<typename T>
-typename List<T>::ConstReverseIterator& List<T>::ConstReverseIterator::operator++()
+template<typename T>typename List<T>::ConstReverseIterator& List<T>::ConstReverseIterator::operator++()
 {
 	ConstBaseIterator::Temp = ConstBaseIterator::Temp->pPrev;
 	return *this;
 }
-template<typename T>
-typename List<T>::ConstReverseIterator List<T>::ConstReverseIterator::operator++(int)
+template<typename T>typename List<T>::ConstReverseIterator List<T>::ConstReverseIterator::operator++(int)
 {
 	ConstReverseIterator old = *this;
 	ConstBaseIterator::Temp = ConstBaseIterator::Temp->pPrev;
 	return old;
 }
-template<typename T>
-typename List<T>::ConstReverseIterator& List<T>::ConstReverseIterator::operator--()
+template<typename T>typename List<T>::ConstReverseIterator& List<T>::ConstReverseIterator::operator--()
 {
 	ConstBaseIterator::Temp = ConstBaseIterator::Temp->pNext;
 	return *this;
 }
-template<typename T>
-typename List<T>::ConstReverseIterator List<T>::ConstReverseIterator::operator--(int)
+template<typename T>typename List<T>::ConstReverseIterator List<T>::ConstReverseIterator::operator--(int)
 {
 	ConstReverseIterator old = *this;
 	ConstBaseIterator::Temp = ConstBaseIterator::Temp->pNext;
 	return old;
 }
+
 /////////////////////////////////////////////////////////////////////////
-/////////////////				    ITERATORS		   //////////////////
+/////////////////		      ITERATORS		           //////////////////
 /////////////////////////////////////////////////////////////////////////
 template<typename T>T& List<T>::Iterator::operator*()
 {
@@ -506,8 +520,4 @@ void main()
 	}
 	cout << endl;
 
-	}
-
-template<typename T> class Class
-{
-};
+}
