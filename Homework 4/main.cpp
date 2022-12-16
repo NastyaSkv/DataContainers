@@ -1,6 +1,6 @@
-//cop. BinaryTree
-//1. В класс Tree добавить следующие методы : minValue(); maxValue(); count(); sum(); avg(); depth(); erase();
-//2. Обеспечить вызов всех методов без необходимости передачи корня дерева :
+п»ї//cop. BinaryTree
+//1. Р’ РєР»Р°СЃСЃ Tree РґРѕР±Р°РІРёС‚СЊ СЃР»РµРґСѓСЋС‰РёРµ РјРµС‚РѕРґС‹ : minValue(); maxValue(); count(); sum(); avg(); depth(); erase();
+//2. РћР±РµСЃРїРµС‡РёС‚СЊ РІС‹Р·РѕРІ РІСЃРµС… РјРµС‚РѕРґРѕРІ Р±РµР· РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё РїРµСЂРµРґР°С‡Рё РєРѕСЂРЅСЏ РґРµСЂРµРІР° :
 
 #include<iostream>
 using std::cin;
@@ -14,8 +14,8 @@ class Tree
 {
 	class Element
 	{
-		int Data;                    //знач. элемента
-		Element* pLeft, * pRight;    //адреса потомков
+		int Data;                    //Р·РЅР°С‡. СЌР»РµРјРµРЅС‚Р°
+		Element* pLeft, * pRight;    //Р°РґСЂРµСЃР° РїРѕС‚РѕРјРєРѕРІ
 	public:
 		Element(int Data, Element* pLeft = nullptr, Element* pRight = nullptr)
 			:Data(Data), pLeft(pLeft), pRight(pRight)
@@ -59,21 +59,21 @@ public:
 			else insert(Data, Root->pRight);
 		}
 	}
-	void minValue(Element* Root)             //MIN значение
+	void minValue(Element* Root)             //MIN Р·РЅР°С‡РµРЅРёРµ
 	{
 		if (Root == nullptr)return;
 		minValue(Root->pLeft);
 		if (Root->pLeft == nullptr)cout << Root->Data << tab;
 	}
 
-	void maxValue(Element* Root)             //MAX значение
+	void maxValue(Element* Root)             //MAX Р·РЅР°С‡РµРЅРёРµ
 	{
 		if (Root == nullptr)return;
 		maxValue(Root->pRight);
 		if (Root->pRight == nullptr)cout << Root->Data << tab;
 	}
 
-	int count(Element* Root)                 //количество элементов
+	int count(Element* Root)                 //РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ
 	{
 		if (Root == nullptr)return size;
 		count(Root->pLeft);
@@ -81,7 +81,7 @@ public:
 		count(Root->pRight);
 	}
 
-	int sum(Element* Root)                 //сумма элементов
+	int sum(Element* Root)                 //СЃСѓРјРјР° СЌР»РµРјРµРЅС‚РѕРІ
 	{
 		if (Root == nullptr)return summa;
 		sum(Root->pLeft);
@@ -89,7 +89,7 @@ public:
 		sum(Root->pRight);
 	}
 
-	double avg(Element* Root)                 //среднее арифметическое элементов
+	double avg(Element* Root)                 //СЃСЂРµРґРЅРµРµ Р°СЂРёС„РјРµС‚РёС‡РµСЃРєРѕРµ СЌР»РµРјРµРЅС‚РѕРІ
 	{
 		return ((double)summa / size);
 	}
@@ -143,7 +143,7 @@ void main()
 {
 	setlocale(LC_ALL, "Rus");
 	int n, element;
-	cout << "Введите количество элементов: "; cin >> n;
+	cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ: "; cin >> n;
 	Tree tree;
 	for (int i = 0; i < n; i++)
 	{
@@ -152,19 +152,19 @@ void main()
 	tree.print(tree.getRoot());
 	cout << endl;
 
-	cout << "Минимальное значение: ";
+	cout << "РњРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ: ";
 	tree.minValue(tree.getRoot());
-	cout << endl << "Максимальное значение: ";
+	cout << endl << "РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ: ";
 	tree.maxValue(tree.getRoot());
-	cout << endl << "Количество элементов: ";
+	cout << endl << "РљРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ: ";
 	cout << tree.count(tree.getRoot()) << endl;
-	cout << "Сумма элементов: ";
+	cout << "РЎСѓРјРјР° СЌР»РµРјРµРЅС‚РѕРІ: ";
 	cout << tree.sum(tree.getRoot()) << endl;
-	cout << "Среднее арифметическое элементов: ";
+	cout << "РЎСЂРµРґРЅРµРµ Р°СЂРёС„РјРµС‚РёС‡РµСЃРєРѕРµ СЌР»РµРјРµРЅС‚РѕРІ: ";
 	cout << tree.avg(tree.getRoot()) << endl;
-	cout << "Глубина дерева: ";
+	cout << "Р“Р»СѓР±РёРЅР° РґРµСЂРµРІР°: ";
 	cout << tree.depth(tree.getRoot()) << endl;
-	cout << "Введите значение удаляемого элемента: "; cin >> element;
+	cout << "Р’РІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ СѓРґР°Р»СЏРµРјРѕРіРѕ СЌР»РµРјРµРЅС‚Р°: "; cin >> element;
 	tree.erase(tree.getRoot(), element);
 	tree.print(tree.getRoot());
 	cout << endl;
