@@ -113,7 +113,7 @@ public:
 			{
 				if (Root->pLeft = nullptr)
 				{
-					Root->Data = 0;
+					this->Root = 0;
 					//delete Root; 
 					return;
 				}
@@ -135,7 +135,7 @@ public:
 			{
 				if (Root->pRight = nullptr)
 				{
-					Root->Data = 0; 
+					this->Root = 0;
 					//delete Root; 
 					return;
 				}
