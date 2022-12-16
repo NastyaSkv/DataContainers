@@ -103,9 +103,7 @@ public:
 
 	void erase(Element* Root, int element)
 	{
-		/*if (this->Root == nullptr)this->Root = Root->pRight;
-		if (Root == nullptr)return;*/
-		if (element < Root->Data)
+		if (element <= Root->Data)
 		{
 			if (Root->Data != element)
 			{
@@ -115,18 +113,39 @@ public:
 			{
 				if (Root->pLeft = nullptr)
 				{
-					Root->Data = 0;return;
+					Root->Data = 0;
+					delete Root; 
+					return;
 				}
 				else
 				{
-					Root->Data = Root->pLeft;
+					this->Root = Root->pLeft;
+					delete Root;
+					return;
 				}
 			}
 		}
 		else
 		{
-			if (Root->pRight == nullptr)Root->pRight = new Element(Data);
-			else insert(Data, Root->pRight);
+			if (Root->Data != element)
+			{
+				erase(Root->pRight, element);
+			}
+			else if (Root->Data == element)
+			{
+				if (Root->pRight = nullptr)
+				{
+					Root->Data = 0; 
+					delete Root; 
+					return;
+				}
+				else
+				{
+					this->Root = Root->pRight; 
+					delete Root;
+					return;
+				}
+			}
 		}
 	}
 
