@@ -120,6 +120,7 @@ public:
 				else
 				{
 					this->Root = Root->pLeft;
+				
 					//delete Root;
 					return;
 				}
