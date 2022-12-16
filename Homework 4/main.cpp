@@ -28,6 +28,7 @@ class Tree
 		}
 		friend class Tree;
 	}*Root;
+	unsigned int size, summa, dep;
 public:
 	Element* getRoot()const
 	{
@@ -35,6 +36,7 @@ public:
 	}
 	Tree() :Root(nullptr)
 	{
+		//size = 0;
 		cout << "TConstructor:\t" << this << endl;
 	}
 	~Tree()
@@ -42,7 +44,7 @@ public:
 		cout << "TDestructor:\t" << this << endl;
 	}
 
-	void insert(int Data, Element* Root) //добавление элемента
+	void insert(int Data, Element* Root)
 	{
 		if (this->Root == nullptr)this->Root = new Element(Data);
 		if (Root == nullptr)return;
@@ -54,7 +56,77 @@ public:
 		else
 		{
 			if (Root->pRight == nullptr)Root->pRight = new Element(Data);
-			else insert(Data, Root->pLeft);
+			else insert(Data, Root->pRight);
+		}
+	}
+	void minValue(Element* Root)             //MIN значение
+	{
+		if (Root == nullptr)return;
+		minValue(Root->pLeft);
+		if (Root->pLeft == nullptr)cout << Root->Data << tab;
+	}
+
+	void maxValue(Element* Root)             //MAX значение
+	{
+		if (Root == nullptr)return;
+		maxValue(Root->pRight);
+		if (Root->pRight == nullptr)cout << Root->Data << tab;
+	}
+
+	int count(Element* Root)                 //количество элементов
+	{
+		if (Root == nullptr)return size;
+		count(Root->pLeft);
+		size++;
+		count(Root->pRight);
+	}
+
+	int sum(Element* Root)                 //сумма элементов
+	{
+		if (Root == nullptr)return summa;
+		sum(Root->pLeft);
+		summa += Root->Data;
+		sum(Root->pRight);
+	}
+
+	double avg(Element* Root)                 //среднее арифметическое элементов
+	{
+		return ((double)summa / size);
+	}
+
+	int depth(Element* Root)
+	{
+		if (Root == nullptr)return dep;
+		dep++;
+		depth(Root->pLeft);
+	}
+
+	void erase(Element* Root, int element)
+	{
+		/*if (this->Root == nullptr)this->Root = Root->pRight;
+		if (Root == nullptr)return;*/
+		if (element < Root->Data)
+		{
+			if (Root->Data != element)
+			{
+				erase(Root->pLeft, element);
+			}
+			else if (Root->Data == element)
+			{
+				if (Root->pLeft = nullptr)
+				{
+					Root->Data = 0;return;
+				}
+				else
+				{
+					Root->Data = Root->pLeft;
+				}
+			}
+		}
+		else
+		{
+			if (Root->pRight == nullptr)Root->pRight = new Element(Data);
+			else insert(Data, Root->pRight);
 		}
 	}
 
@@ -65,13 +137,12 @@ public:
 		cout << Root->Data << tab;
 		print(Root->pRight);
 	}
-
 };
 
 void main()
 {
 	setlocale(LC_ALL, "Rus");
-	int n;
+	int n, element;
 	cout << "Введите количество элементов: "; cin >> n;
 	Tree tree;
 	for (int i = 0; i < n; i++)
@@ -80,7 +151,23 @@ void main()
 	}
 	tree.print(tree.getRoot());
 	cout << endl;
-	
+
+	cout << "Минимальное значение: ";
+	tree.minValue(tree.getRoot());
+	cout << endl << "Максимальное значение: ";
+	tree.maxValue(tree.getRoot());
+	cout << endl << "Количество элементов: ";
+	cout << tree.count(tree.getRoot()) << endl;
+	cout << "Сумма элементов: ";
+	cout << tree.sum(tree.getRoot()) << endl;
+	cout << "Среднее арифметическое элементов: ";
+	cout << tree.avg(tree.getRoot()) << endl;
+	cout << "Глубина дерева: ";
+	cout << tree.depth(tree.getRoot()) << endl;
+	cout << "Введите значение удаляемого элемента: "; cin >> element;
+	tree.erase(tree.getRoot(), element);
+	tree.print(tree.getRoot());
+	cout << endl;
 	/*Tree tree;
 	for (int i = 0; i < n; i++)
 	{
