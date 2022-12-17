@@ -1,10 +1,11 @@
-﻿#include<iostream>
+﻿#pragma warning(disable:4326)
+#include<iostream>
 using std::cin;
 using std::cout;
 using std::endl;
 
 #define tab "\t"
-#define delimiter "\n--------------------------------------------------\n"
+#define delimiter "\n------------------------------------------------------\n"
 
 #define DEBUG
 
@@ -116,7 +117,7 @@ private:
 			else insert(Data, Root->pRight);
 		}
 	}
-	void erase(int Data, Element* Root)
+	void erase(int Data, Element*& Root)
 	{
 		if (Root == nullptr)return;
 		erase(Data, Root->pLeft);
@@ -224,7 +225,7 @@ public:
 	}
 };
 
-//#define BASE_CKECK
+//#define BASE_CHECK
 
 void main()
 {
